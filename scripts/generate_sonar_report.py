@@ -20,11 +20,6 @@ PROJECT_NAME = "Blockchain Identity Management Framework"
 
 BASE_URL = "https://sonarcloud.io"
 
-REPO_URL = (
-    "https://github.com/kurapatiharshith/"
-    "TO-GENERATE-A-SECURE-FRAMEWORK-IN-IDENTITY-MANAGEMENT-USING-BLOCKCHAIN-"
-)
-
 # ==============================
 # FETCH PROJECT METRICS
 # ==============================
@@ -116,6 +111,7 @@ severity_counts = {
 }
 
 for issue in issues:
+
     severity = issue.get("severity", "INFO")
 
     if severity in severity_counts:
@@ -147,9 +143,19 @@ pdf.ln(5)
 
 pdf.set_font("Arial", "", 12)
 
-pdf.cell(200, 8, f"Project Name: {PROJECT_NAME}", ln=True)
+pdf.cell(
+    200,
+    8,
+    f"Project Name: {PROJECT_NAME}",
+    ln=True
+)
 
-pdf.cell(200, 8, f"Project Key: {PROJECT_KEY}", ln=True)
+pdf.cell(
+    200,
+    8,
+    f"Project Key: {PROJECT_KEY}",
+    ln=True
+)
 
 pdf.cell(
     200,
@@ -166,7 +172,12 @@ pdf.ln(10)
 
 pdf.set_font("Arial", "B", 16)
 
-pdf.cell(200, 10, "Executive Summary", ln=True)
+pdf.cell(
+    200,
+    10,
+    "Executive Summary",
+    ln=True
+)
 
 pdf.set_font("Arial", "", 12)
 
@@ -185,7 +196,12 @@ pdf.ln(5)
 
 pdf.set_font("Arial", "B", 16)
 
-pdf.cell(200, 10, "Overall Status", ln=True)
+pdf.cell(
+    200,
+    10,
+    "Overall Status",
+    ln=True
+)
 
 pdf.set_font("Arial", "", 12)
 
@@ -214,7 +230,12 @@ pdf.ln(10)
 
 pdf.set_font("Arial", "B", 16)
 
-pdf.cell(200, 10, "Severity Breakdown", ln=True)
+pdf.cell(
+    200,
+    10,
+    "Severity Breakdown",
+    ln=True
+)
 
 pdf.set_font("Arial", "B", 12)
 
@@ -238,13 +259,23 @@ pdf.ln(10)
 
 pdf.set_font("Arial", "B", 16)
 
-pdf.cell(200, 10, "Detailed Findings", ln=True)
+pdf.cell(
+    200,
+    10,
+    "Detailed Findings",
+    ln=True
+)
 
 if not issues:
 
     pdf.set_font("Arial", "", 12)
 
-    pdf.cell(200, 10, "No issues found.", ln=True)
+    pdf.cell(
+        200,
+        10,
+        "No issues found.",
+        ln=True
+    )
 
 for issue in issues:
 
@@ -262,7 +293,7 @@ for issue in issues:
 
     raw_component = issue.get("component", "N/A")
 
-    # Clean SonarCloud component path
+    # Clean repository file path
     if ":" in raw_component:
         file_path = raw_component.split(":", 1)[1]
     else:
@@ -270,25 +301,19 @@ for issue in issues:
 
     line_number = str(issue.get("line", "N/A"))
 
-    # GitHub File URL
-    github_file_url = (
-        f"{REPO_URL}/blob/main/{file_path}"
-    )
+    # Repository location
+    repository_location = f"{file_path}"
 
     if line_number != "N/A":
-        github_file_url += f"#L{line_number}"
-
-    # SonarCloud Issue URL
-    issue_url = (
-        f"{BASE_URL}/project/issues"
-        f"?id={PROJECT_KEY}"
-        f"&issues={issue_key}"
-        f"&open={issue_key}"
-    )
+        repository_location += f" : Line {line_number}"
 
     pdf.set_font("Arial", "B", 12)
 
-    pdf.multi_cell(0, 8, f"Issue ID: {issue_key}")
+    pdf.multi_cell(
+        0,
+        8,
+        f"Issue ID: {issue_key}"
+    )
 
     pdf.set_font("Arial", "", 11)
 
@@ -298,8 +323,7 @@ for issue in issues:
         ("Rule", rule),
         ("Status", status),
         ("Message", message),
-        ("Repository File", file_path),
-        ("Line Number", line_number),
+        ("Repository Location", repository_location),
     ]
 
     for key, value in details:
@@ -310,22 +334,6 @@ for issue in issues:
             f"{key}: {value}"
         )
 
-    pdf.set_text_color(0, 0, 255)
-
-    pdf.multi_cell(
-        0,
-        7,
-        f"GitHub File URL: {github_file_url}"
-    )
-
-    pdf.multi_cell(
-        0,
-        7,
-        f"Issue URL: {issue_url}"
-    )
-
-    pdf.set_text_color(0, 0, 0)
-
     pdf.ln(5)
 
 # ==============================
@@ -334,7 +342,12 @@ for issue in issues:
 
 pdf.set_font("Arial", "B", 16)
 
-pdf.cell(200, 10, "Conclusion", ln=True)
+pdf.cell(
+    200,
+    10,
+    "Conclusion",
+    ln=True
+)
 
 pdf.set_font("Arial", "", 12)
 
