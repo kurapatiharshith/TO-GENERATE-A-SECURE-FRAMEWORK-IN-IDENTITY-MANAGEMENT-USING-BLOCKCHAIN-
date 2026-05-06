@@ -264,6 +264,6 @@ pdf.multi_cell(0, 8, conclusion)
 # SAVE PDF
 # ==============================
 
-pdf.output("sonar-security-report.pdf")
+pdf.output("sonar-report.pdf")
 
 print("PDF Report Generated Successfully")
