@@ -40,7 +40,7 @@ jobs:
             pip install -r requirements.txt
           fi
 
-      # Run SonarCloud Scan
+      # SonarCloud Scan
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:
@@ -52,3 +52,22 @@ jobs:
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.sources=.
             -Dsonar.python.version=3.11
+
+      # Install PDF Libraries
+      - name: Install PDF Dependencies
+        run: |
+          pip install requests fpdf
+
+      # Generate PDF Report
+      - name: Generate PDF Report
+        run: |
+          python scripts/generate_sonar_report.py
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      # Upload PDF Report
+      - name: Upload PDF Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: sonarcloud-report
+          path: sonar-report.pdf
